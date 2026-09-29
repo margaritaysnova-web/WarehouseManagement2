@@ -1,0 +1,212 @@
+﻿<Window x:Class="WarehouseApp.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="Управление складом" 
+        Height="800" Width="1400"
+        WindowStartupLocation="CenterScreen"
+        Background="#FF1E1E2E"
+        WindowState="Maximized">
+
+    <Grid Margin="10">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="300"/>
+            <ColumnDefinition Width="300"/>
+            <ColumnDefinition Width="*"/>
+        </Grid.ColumnDefinitions>
+
+        <!-- Организации -->
+        <Border Grid.Column="0" Background="#FF2D2D44" 
+                CornerRadius="8" Margin="5" Padding="15">
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="Auto"/>
+                </Grid.RowDefinitions>
+
+                <TextBlock Grid.Row="0" 
+                           Text="Организации" 
+                          FontSize="18" FontWeight="Bold"
+                          Foreground="#FF2196F3"
+                          Margin="0,0,0,10"/>
+
+                <ListView Grid.Row="1"
+                         ItemsSource="{Binding Organizations}"
+                         SelectedItem="{Binding SelectedOrganization}"
+                         DisplayMemberPath="OrgName"
+                         Background="#FF35355A"
+                         Foreground="White"
+                         Margin="0,10"/>
+
+                <StackPanel Grid.Row="2" Orientation="Horizontal" 
+                           HorizontalAlignment="Center">
+                    <Button Content="Добавить" 
+                            Command="{Binding AddOrganizationCommand}"
+                            Margin="2"/>
+                    <Button Content="Изменить" 
+                            Command="{Binding EditOrganizationCommand}"
+                            Margin="2"/>
+                    <Button Content="Удалить" 
+                            Command="{Binding DeleteOrganizationCommand}"
+                            Background="#FFF44336"
+                            Margin="2"/>
+                </StackPanel>
+            </Grid>
+        </Border>
+
+        <!-- Склады -->
+        <Border Grid.Column="1" Background="#FF2D2D44" 
+                CornerRadius="8" Margin="5" Padding="15">
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="Auto"/>
+                </Grid.RowDefinitions>
+
+                <StackPanel Grid.Row="0">
+                    <TextBlock Text="Склады" 
+                              FontSize="18" FontWeight="Bold"
+                              Foreground="#FF2196F3"/>
+                    <TextBlock Text="{Binding ContextOrganization, StringFormat='Орг: {0}'}"
+                              Foreground="#FF4CAF50"
+                              FontSize="12" Margin="0,5,0,0"/>
+                </StackPanel>
+
+                <ListView Grid.Row="1"
+                         ItemsSource="{Binding Warehouses}"
+                         SelectedItem="{Binding SelectedWarehouse}"
+                         DisplayMemberPath="WhName"
+                         Background="#FF35355A"
+                         Foreground="White"
+                         Margin="0,10"/>
+
+                <StackPanel Grid.Row="2">
+                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Margin="0,0,0,5">
+                        <Button Content="Добавить" 
+                            Command="{Binding AddWarehouseCommand}"
+                            Margin="2" Width="85"/>
+                        <Button Content="Изменить" 
+                            Command="{Binding EditWarehouseCommand}"
+                            Margin="2" Width="85"/>
+                        <Button Content="Удалить" 
+                            Command="{Binding DeleteWarehouseCommand}"
+                            Background="#FFF44336"
+                            Margin="2" Width="75"/>
+                    </StackPanel>
+                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
+                        <Button Content="Приход" 
+                            Command="{Binding AddIncomeInvoiceCommand}"
+                            Background="#FF4CAF50"
+                            Margin="2" Width="110" FontSize="12"/>
+                        <Button Content="Расход" 
+                            Command="{Binding AddOutcomeInvoiceCommand}"
+                            Background="#FFFF9800"
+                            Margin="2" Width="110" FontSize="12"/>
+                    </StackPanel>
+                </StackPanel>
+            </Grid>
+        </Border>
+
+        <!-- Товары -->
+        <Border Grid.Column="2" Background="#FF2D2D44" 
+                CornerRadius="8" Margin="5" Padding="15">
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="Auto"/>
+                </Grid.RowDefinitions>
+
+                <StackPanel Grid.Row="0">
+                    <TextBlock Text="Товары" 
+                              FontSize="18" FontWeight="Bold"
+                              Foreground="#FF2196F3"/>
+                    <StackPanel Orientation="Horizontal">
+                        <TextBlock Text="{Binding ContextOrganization, StringFormat='Орг: {0}'}"
+                                  Foreground="#FF4CAF50"
+                                  FontSize="12"/>
+                        <TextBlock Text=" | " Foreground="White"/>
+                        <TextBlock Text="{Binding ContextWarehouse, StringFormat='Склад: {0}'}"
+                                  Foreground="#FF4CAF50"
+                                  FontSize="12"/>
+                    </StackPanel>
+                </StackPanel>
+
+                <DataGrid Grid.Row="1" ItemsSource="{Binding Products}"
+                          SelectedItem="{Binding SelectedProduct}"
+                          AutoGenerateColumns="False"
+                          Background="#FF35355A"
+                          Margin="0,10"
+                          IsReadOnly="True">
+                    <DataGrid.Columns>
+                        <!-- Фото -->
+                        <DataGridTemplateColumn Header="Фото" Width="60">
+                            <DataGridTemplateColumn.CellTemplate>
+                                <DataTemplate>
+                                    <Image Source="{Binding PhotoPath}" 
+                           Width="40" Height="40" 
+                           Stretch="Uniform"
+                           Visibility="Visible"/>
+                                </DataTemplate>
+                            </DataGridTemplateColumn.CellTemplate>
+                        </DataGridTemplateColumn>
+                        
+                        <!-- Наименование -->
+                        <DataGridTextColumn Header="Наименование" 
+                           Binding="{Binding Name}" 
+                           Width="150"/>
+
+                        <!-- Категория -->
+                        <DataGridTextColumn Header="Категория" 
+                           Binding="{Binding Category.Name}" 
+                           Width="120"/>
+
+                        <!-- Производитель -->
+                        <DataGridTextColumn Header="Производитель" 
+                           Binding="{Binding Manufacturer.Name}" 
+                           Width="120"/>
+
+                        <!-- Поставщик -->
+                        <DataGridTextColumn Header="Поставщик" 
+                           Binding="{Binding Supplier.Name}" 
+                           Width="120"/>
+
+                        <!-- Цена -->
+                        <DataGridTextColumn Header="Цена" 
+                           Binding="{Binding Price, StringFormat='{}{0:N2} руб.'}" 
+                           Width="100"/>
+
+                        <!-- Остаток -->
+                        <DataGridTextColumn Header="Остаток" 
+                           Binding="{Binding StockQuantity}" 
+                           Width="80"/>
+
+                        <!-- Скидка % -->
+                        <DataGridTextColumn Header="Скидка %" 
+                           Binding="{Binding DiscountPercent, StringFormat='{}{0}%'}" 
+                           Width="80"/>
+                    </DataGrid.Columns>
+                </DataGrid>
+
+                <StackPanel Grid.Row="2" Orientation="Horizontal" 
+                           HorizontalAlignment="Center">
+                    <Button Content="Добавить" 
+                            Command="{Binding AddProductCommand}"
+                            Margin="2"/>
+                    <Button Content="Изменить" 
+                            Command="{Binding EditProductCommand}"
+                            Margin="2"/>
+                    <Button Content="Удалить" 
+                            Command="{Binding DeleteProductCommand}"
+                            Background="#FFF44336"
+                            Margin="2"/>
+                    <Button Content="Импорт CSV" 
+                            Command="{Binding ImportCsvCommand}"
+                            Background="#FFFF9800"
+                            Margin="2"/>
+                </StackPanel>
+            </Grid>
+        </Border>
+    </Grid>
+</Window>

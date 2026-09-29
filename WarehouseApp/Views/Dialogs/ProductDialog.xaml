@@ -1,0 +1,108 @@
+﻿<Window x:Class="WarehouseApp.Views.Dialogs.ProductDialog"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="Товар"
+        Width="500" Height="700"
+        WindowStartupLocation="CenterOwner"
+        Background="#FF1E1E2E"
+        ResizeMode="NoResize">
+	<ScrollViewer VerticalScrollBarVisibility="Auto">
+		<Grid Margin="20">
+			<Grid.RowDefinitions>
+				<RowDefinition Height="Auto"/>
+				<RowDefinition Height="Auto"/>
+				<RowDefinition Height="Auto"/>
+			</Grid.RowDefinitions>
+
+			<TextBlock Grid.Row="0"
+                       Text="Данные товара"
+                       FontSize="18" FontWeight="Bold"
+                       Foreground="#FF2196F3"
+                       Margin="0,0,0,15"/>
+
+			<StackPanel Grid.Row="1">
+				<!-- Наименование -->
+				<TextBlock Text="Наименование:" Foreground="White" Margin="0,5,0,0"/>
+				<TextBox x:Name="NameTextBox" Width="440"
+                         Background="#FF3D3D5C" Foreground="White"/>
+
+				<!-- Категория -->
+				<TextBlock Text="Категория:" Foreground="White" Margin="0,10,0,0"/>
+				<TextBox x:Name="CategoryTextBox" Width="440"
+                         Background="#FF3D3D5C" Foreground="White"/>
+
+				<!-- Производитель -->
+				<TextBlock Text="Производитель:" Foreground="White" Margin="0,10,0,0"/>
+				<TextBox x:Name="ManufacturerTextBox" Width="440"
+                         Background="#FF3D3D5C" Foreground="White"/>
+
+				<!-- Поставщик -->
+				<TextBlock Text="Поставщик:" Foreground="White" Margin="0,10,0,0"/>
+				<TextBox x:Name="SupplierTextBox" Width="440"
+                         Background="#FF3D3D5C" Foreground="White"/>
+
+				<!-- Цена -->
+				<TextBlock Text="Цена (руб.):" Foreground="White" Margin="0,10,0,0"/>
+				<TextBox x:Name="PriceTextBox" Width="440"
+                         Background="#FF3D3D5C" Foreground="White"/>
+
+				<!-- Количество -->
+				<TextBlock Text="Количество на складе:" Foreground="White" Margin="0,10,0,0"/>
+				<TextBox x:Name="QuantityTextBox" Width="440"
+                         Background="#FF3D3D5C" Foreground="White"/>
+
+				<!-- Скидка -->
+				<TextBlock Text="Скидка (%):" Foreground="White" Margin="0,10,0,0"/>
+				<TextBox x:Name="DiscountTextBox" Width="440" Text="0"
+                         Background="#FF3D3D5C" Foreground="White"/>
+
+				<!-- Единица измерения -->
+				<TextBlock Text="Единица измерения:" Foreground="White" Margin="0,10,0,0"/>
+				<TextBox x:Name="UnitTextBox" Width="440" Text="шт."
+                         Background="#FF3D3D5C" Foreground="White"/>
+
+				<!-- Описание -->
+				<TextBlock Text="Описание:" Foreground="White" Margin="0,10,0,0"/>
+				<TextBox x:Name="DescriptionTextBox" Width="440" Height="60"
+                         TextWrapping="Wrap" AcceptsReturn="True"
+                         Background="#FF3D3D5C" Foreground="White"/>
+
+				<!-- Фото -->
+				<TextBlock Text="Путь к фото:" Foreground="White" Margin="0,10,0,0"/>
+				<Grid Margin="0,5,0,0">
+					<Grid.ColumnDefinitions>
+						<ColumnDefinition Width="*"/>
+						<ColumnDefinition Width="Auto"/>
+					</Grid.ColumnDefinitions>
+					<TextBox x:Name="PhotoPathTextBox"
+                             Background="#FF3D3D5C" Foreground="White"
+                             IsReadOnly="True"/>
+					<Button Grid.Column="1"
+                            Content="Обзор..."
+                            Width="80" Height="30"
+                            Background="#FF2196F3"
+                            Foreground="White"
+                            Click="BrowsePhotoButton_Click"
+                            Margin="10,0,0,0"/>
+				</Grid>
+			</StackPanel>
+
+			<StackPanel Grid.Row="2"
+                        Orientation="Horizontal"
+                        HorizontalAlignment="Right"
+                        Margin="0,20,0,0">
+				<Button Content="Отмена"
+                        Background="#FF2D2D44"
+                        Foreground="White"
+                        Click="CancelButton_Click"
+                        Width="100" Height="35"/>
+				<Button Content="Сохранить"
+                        Background="#FF4CAF50"
+                        Foreground="White"
+                        Click="SaveButton_Click"
+                        Width="100" Height="35"
+                        Margin="10,0,0,0"/>
+			</StackPanel>
+		</Grid>
+	</ScrollViewer>
+</Window>
